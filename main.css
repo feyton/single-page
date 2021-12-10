@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Josefin+Slab:wght@300;500;600&family=Lato&family=Lexend:wght@400;500&display=swap');
+
+:root {
+    --Josefin: "Josefin Slab", sans-serif;
+    --Lexend: 'Lexend', sans-serif;
+    --Lato: 'Lato', sans-serif;
+    --Abel: 'Abel', sans-serif;
+    --light-blue: rgba(33, 141, 241, 1);
+    --dark-blue: rgba(33, 141, 241, 0.31);
+    --dark-grey: rgba(35, 43, 51, 0.9);
+    --light-cyan: rgba(130, 180, 195, 1);
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    font-family: var(--Lexend);
+}
+
+p {
+    font-family: var(--Abel);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+html {
+    position: relative;
+}
+
+nav {
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgba(166, 206, 240, 0.637);
+    overflow: hidden;
+    font-family: var(--Abel);
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bolder;
+    color: black;
+
+}
+
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    list-style: none;
+    transition: .2s ease-in-out;
+    padding: 0rem 1rem;
+}
+
+nav .brand a {
+    font-family: var(--Lexend);
+    color: rgb(28, 4, 245);
+}
+
+nav .profile-image {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile {
+    /* display: inline-block; */
+    vertical-align: middle;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    color: blue;
+
+}
+
+body {
+    position: relative;
+}
+
+main {
+    min-height: 100vh;
+    background-color: rgba(245, 243, 243, 0.699);
+}
+
+.footer {
+    min-height: 100px;
+    width: 100%;
+    background-color: var(--dark-grey);
+    /* position: absolute;
+    bottom: 0;
+    left: 0; */
+    /* margin-top: 100px; */
+    text-align: center;
+    font-family: var(--Lexend);
+    padding: 2rem;
+}
+
+/* Home */
+.home {
+    text-align: center;
+    padding: 2rem 1rem;
+
+}
+
+footer a {
+    color: rgb(171, 236, 225);
+    font-family: var(--Lexend);
+    text-decoration: 2px solid white;
+}
+
+/* General form */
+.login-view, .signup-view {
+    padding: 10px;
+}
+
+form {
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px grey;
+    width: fit-content;
+    margin: 10px auto;
+}
+
+form h2 {
+    padding: 10px 20px;
+    /* text-decoration: underline; */
+    text-align: center;
+    width: 100%;
+}
+
+form input, form textarea {
+    display: block;
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--light-cyan);
+    font-family: var(--Lexend);
+}
+
+form input::placeholder, form textarea::placeholder {
+    color: black;
+}
+
+.btn {
+    background-color: var(--light-blue);
+    color: white;
+    font-weight: bolder;
+    border-radius: 0px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    margin: 4px;
+}
+
+.btn:hover {
+    transform: scale(.9);
+    transition: .2s ease;
+}
+
+.btn.btn-primary {
+
+    background-color: var(--light-cyan);
+    font-family: var(--Lexend);
+    color: blue;
+}
+
+.btn.btn-secondary {
+    background-color: var(--light-blue);
+    font-family: var(--Lexend);
+    color: rgb(19, 14, 14);
+}
+
+.image-upload {
+    height: 100px;
+    border: 2px solid red;
+    width: fit-content;
+    display: none;
+}
+
+.image-upload img {
+    height: 100px;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1rem;
+}
+
+/*  */
+
+/* Styling the image input */
+
+.custom-file-input::-webkit-file-upload-button {
+    padding: 10px 20px;
+    margin: 0 5px 0px 0px;
+    border-radius: 10px 0px 0px 10px;
+    border: none;
+    font-family: var(--Lexend);
+    background-color: rgb(17, 73, 73);
+    color: white;
+}
+
+form input[type="file"] {
+    padding: 0px;
+}
+
+/* JS Classes */
+
+.logged-in {
+    display: none;
+}
+
+/* //// */
+.blog-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 2rem 6rem;
+}
+
+.blog-list .card {
+    max-width: 200px;
+    overflow: hidden;
+    text-align: left;
+    box-shadow: 2px 2px 2px 2px grey;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    margin: 1rem;
+}
+
+.blog-list .card img {
+    max-height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.card .title {
+    text-align: left;
+    font-family: var(--Lexend);
+    font-weight: bold;
+    color: var(--dark-grey);
+    padding: 0.2rem;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.card .title:hover {
+    color: rgb(44, 46, 160);
+}
+
+.post-info {
+    padding: .2rem 1rem;
+    color: white;
+    font-family: var(--Josefin);
+    background-color: #444;
+    margin: 0 auto;
+    width: fit-content;
+    border-radius: 20px;
+}
+
+.card p {
+    margin-bottom: 20px;
+    margin-left: 5px;
+    display: block;
+}
+
+.card .btn {
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+    display: block;
+    width: fit-content;
+}
