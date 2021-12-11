@@ -8,9 +8,18 @@
     <title>Fabrice| Single Page</title>
     <link rel="stylesheet" href="./main.css" class="css">
     <link rel="icon" type="image/png" href="Logo.png">
+    <script src='https://cdn.tiny.cloud/1/xyeau33pff3iqnbpm6awb9rz6y6mrvid09r36yumi28g026m/tinymce/5/tinymce.min.js'
+        referrerpolicy="origin">
+        </script>
+    <script>
+
+    </script>
 </head>
 
 <body>
+    <div class="loader d-none">
+        <div class="lds-dual-ring "></div>
+    </div>
     <nav>
         <div class="brand">
             <a data-link="home" class="nav-link home">Fabrice</a>
@@ -18,7 +27,7 @@
         <ul>
             <li><a data-link="home" class="nav-link home">Home</a></li>
             <!-- <li><a href="#index" data-link="blog" class="nav-link">Blog</a></li> -->
-            <!-- <li><a href="#index" data-link="about" class="nav-link">About</a></li> -->
+            <li class="logged-in"><a data-link="about" class="nav-link create">Create</a></li>
             <li class="logged-out"><a data-link="login" class="nav-link login">Login</a></li>
             <li class="logged-out"><a data-link="signup" class="nav-link signup">Signup</a></li>
             <li class="logged-in"><a data-link="home" class="profile"><img src="IMG-20191129-WA0001.jpg" alt=""
@@ -28,66 +37,27 @@
     </nav>
 
     <main id="main-container">
+        <div class="create-view">
+            <h2 class="capitalize">Create a new post</h2>
 
-        <div class="home">
-            <h2>Welcome to Feyton Inc</h2>
+            <form action="#fdd" id="create-post-form">
+                <input type="text" name="post-title" id="post-title-create" placeholder="Title" required minlength="3">
 
-            <div class="blog-list">
-                <div class="card">
-                    <div class="post-image">
-                        <img src="/IMG-20191129-WA0001.jpg" alt="">
-                        <div class="post-info">
-                            <span>Fabruce |</span>
-                            <span>25 June 2021</span>
-                        </div>
-                    </div>
-                    <a href="#post" class="title" data-post_id="">Lorem ipsum dolor sit amet consectetur.</a>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, eius!</p>
-                    <a href="#post" data-post_id="" class="btn btn-primary">Read more</a>
+                <input type="file" accept="image/*" name="post-picture" id="post-picture" placeholder="Post Picture"
+                    class="custom-file-input" required>
+                <div class="check-box-group">
+                    <input type="checkbox" name="published" id="post-published">
+                    <label for="post-published">Published</label>
+                </div> <textarea name="content" id="post-content-create" cols="30" rows="10"
+                    placeholder="Add your content here"></textarea>
 
-                </div>
-                <div class="card">
-                    <div class="post-image">
-                        <img src="/IMG-20191129-WA0001.jpg" alt="">
-                        <div class="post-info">
-                            <span>Fabruce |</span>
-                            <span>25 June 2021</span>
-                        </div>
-                    </div>
-                    <a href="#post" class="title" data-post_id="">Lorem ipsum dolor sit amet consectetur.</a>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, eius!</p>
-                    <a href="#post" data-post_id="" class="btn btn-primary">Read more</a>
+                <input type="submit" value="Create" class="btn btn-primary">
 
-                </div>
-                <div class="card">
-                    <div class="post-image">
-                        <img src="/IMG-20191129-WA0001.jpg" alt="">
-                        <div class="post-info">
-                            <span>Fabruce |</span>
-                            <span>25 June 2021</span>
-                        </div>
-                    </div>
-                    <a href="#post" class="title" data-post_id="">Lorem ipsum dolor sit amet consectetur.</a>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, eius!</p>
-                    <a href="#post" data-post_id="" class="btn btn-primary">Read more</a>
 
-                </div>
-                <div class="card">
-                    <div class="post-image">
-                        <img src="/IMG-20191129-WA0001.jpg" alt="">
-                        <div class="post-info">
-                            <span>Fabruce |</span>
-                            <span>25 June 2021</span>
-                        </div>
-                    </div>
-                    <a href="#post" class="title" data-post_id="">Lorem ipsum dolor sit amet consectetur.</a>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, eius!</p>
-                    <a href="#post" data-post_id="" class="btn btn-primary">Read more</a>
 
-                </div>
-            </div>
+
+            </form>
         </div>
-
 
     </main>
 
