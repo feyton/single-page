@@ -6,22 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fabrice| Single Page</title>
-    <link rel="stylesheet" href="main.css" class="css">
+    <link rel="stylesheet" href="./main.css" class="css">
+    <link rel="icon" type="image/png" href="Logo.png">
 </head>
 
 <body>
     <nav>
         <div class="brand">
-            <a href="index.html">Fabrice</a>
+            <a data-link="home" class="nav-link home">Fabrice</a>
         </div>
         <ul>
-            <li><a href="#index" data-link="home" class="nav-link home">Home</a></li>
+            <li><a data-link="home" class="nav-link home">Home</a></li>
             <!-- <li><a href="#index" data-link="blog" class="nav-link">Blog</a></li> -->
             <!-- <li><a href="#index" data-link="about" class="nav-link">About</a></li> -->
-            <li><a href="#index" data-link="login" class="nav-link login">Login</a></li>
-            <li><a href="#index" data-link="signup" class="nav-link signup">Signup</a></li>
-            <li class="logged-in"><a href="#index" data-link="home" class="profile"><img src="IMG-20191129-WA0001.jpg"
-                        alt="" class="profile-image">&nbsp;Fabrice</a></li>
+            <li class="logged-out"><a data-link="login" class="nav-link login">Login</a></li>
+            <li class="logged-out"><a data-link="signup" class="nav-link signup">Signup</a></li>
+            <li class="logged-in"><a data-link="home" class="profile"><img src="IMG-20191129-WA0001.jpg" alt=""
+                        class="profile-image">&nbsp;<span class="user-display-name"></span></a></li>
+            <li class="logged-in"><a data-link="home" class="logout-button">Logout</a></li>
         </ul>
     </nav>
 
@@ -106,9 +108,9 @@
     <!-- Scripts for Firebase -->
 
 
-    <script src="base.js" defer type="module"></script>
-    <script src="templates.js" defer type="module"></script>
-    <script src="main.js" defer type="module"></script>
+    <script src="./base.js" defer type="module"></script>
+    <script src="./templates.js" defer type="module"></script>
+    <script src="./main.js" defer type="module"></script>
 </body>
 
 </html>
