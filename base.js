@@ -4,6 +4,12 @@ import {
   getAuth,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
+
 //import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -41,10 +47,32 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     const uid = user.uid;
-    $("logged-in").toggle();
+    handleUserLoggedIn(user);
     // ...
   } else {
     // User is signed out
     // ...
   }
 });
+
+export function handleUserLoggedIn(user) {
+  const storage = getStorage(app);
+  getDownloadURL(ref(storage, "users/" + user.uid + "/profile.jpg"))
+    .then((url) => {
+      $("nav .profile-image").attr("src", url);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  $(".user-display-name").text(user.displayName);
+
+  $(".logged-in").css("display", "block");
+
+  $(".logged-out").css("display", "none");
+}
+
+export function handleUserLoggedOut() {
+  $(".logged-in").css("display", "none");
+
+  $(".logged-out").css("display", "block");
+}

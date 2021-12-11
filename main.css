@@ -28,6 +28,7 @@ p {
 a {
     text-decoration: none;
     color: black;
+    cursor: pointer;
 }
 
 html {
@@ -48,7 +49,9 @@ nav {
     color: black;
 
 }
-
+.logout-button {
+    color: rgb(155, 13, 13);
+}
 nav ul {
     display: flex;
 }

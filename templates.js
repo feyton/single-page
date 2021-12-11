@@ -65,7 +65,7 @@ export var homeHtml = `
 export var loginView = `
 
 <div class="login-view">
-<form action="#none">
+<form action="#none" id="login-form">
     <h2>Login here</h2>
     <hr>
     <input type="email" name="email" id="user-email" placeholder="Email" required>
@@ -87,10 +87,10 @@ export var signupView = `
 <form action="#none" id="signup-form" method="POST">
     <h2>Signup here</h2>
     <hr>
-    <input type="text" name="name" id="user-name" placeholder="Name">
-    <input type="email" name="email" id="user-email" placeholder="Email">
-    <input type="password" name="email" id="user-password1" placeholder="Password">
-    <input type="password" name="email" id="user-password2" placeholder="Confirm Password">
+    <input type="text" name="name" id="user-name" placeholder="Name" required minlength="3">
+    <input type="email" name="email" id="user-email" placeholder="Email" required>
+    <input type="password" name="password1" id="user-password1" placeholder="Password" required minlength="6">
+    <input type="password" name="password2" id="user-password2" placeholder="Confirm Password" required minlength="6">
     <input type="file" accept="image/*" name="profile-picture" id="user-picture" placeholder="Upload picture"
         class="custom-file-input">
 
