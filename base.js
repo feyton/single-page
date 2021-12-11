@@ -4,13 +4,13 @@ import {
   getAuth,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import {
   getDownloadURL,
   getStorage,
   ref,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 
-//import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -29,6 +29,7 @@ const firebaseConfig = {
 // Initialize Firebase
 export var app = initializeApp(firebaseConfig);
 export var auth = getAuth();
+export var database = getDatabase();
 
 console.log("firebase loaded");
 
@@ -64,7 +65,7 @@ export function handleUserLoggedIn(user) {
     .catch((err) => {
       console.log(err);
     });
-  $(".user-display-name").text(user.displayName);
+  $(".user-display-name").text(user.displayName.split(" ")[0]);
 
   $(".logged-in").css("display", "block");
 
