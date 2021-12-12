@@ -23,6 +23,7 @@ import {
   handleUserLoggedIn,
   handleUserLoggedOut,
   handleUserLoginError,
+  notifyUser,
 } from "./base.js";
 import {
   blogDetailView,
@@ -66,6 +67,7 @@ $(document).ready(() => {
   function renderHome() {
     handlePathnameHistory("", "Fabrice| Home");
     displayLoader(true);
+    // notifyUser("Your Account Has been Created", "primary");
 
     var postRefList = databaseRef(database, "posts");
     get(postRefList)
@@ -80,26 +82,35 @@ $(document).ready(() => {
 
           for (let i = 1; i <= snapshot.size; i++) {
             var data = snapshot.val();
+            localStorage.setItem("allPosts", JSON.stringify(data));
             Object.keys(data).forEach((key) => {
               var userPosts = snapshot.val()[key];
               Object.keys(snapshot.val()[key]).forEach((key2) => {
                 var post = userPosts[key2];
                 var postId = key + "/" + key2;
-                // console.log(postId);
-                if (post.author_name)
-                  renderHomePostDiv(
-                    post.imageURL,
-                    post.title,
-                    postId,
-                    post.summary,
-                    post.author_name,
-                    post.date
-                  );
+                console.log(postId);
+                // if (post.author_name)
+                var postElement = renderHomePostDiv(
+                  post.imageURL,
+                  post.title,
+                  postId,
+                  post.summary,
+                  post.author_name,
+                  post.date
+                );
+                $(".blog-list").append(postElement);
               });
             });
 
             console.log("Loaded data");
             displayLoader(false);
+            // $(document).on("click", ".read-post", (e) => {
+            //   var index = $(".read-post").index(this);
+            //   var postId = $(this).data("ref");
+            //   console.log(index, postId);
+            //   var data = localStorage.getItem("allPosts");
+            //   console.log(JSON.parse(data));
+            // });
           }
           var posts = Object.keys(snapshot.val());
           if (posts.length > 1) {
@@ -119,6 +130,7 @@ $(document).ready(() => {
     mainDiv.html("");
     mainDiv.html(homeHtml);
   }
+
   function handlePathnameHistory(path, title) {
     var host = window.location.host;
 
@@ -159,8 +171,14 @@ $(document).ready(() => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
+        // console.log(user);
+        notifyUser(
+          "Dear " + user.displayName + ", you have successfully logged in!"
+        );
+
         handleUserLoggedIn(user);
+
+        renderHome();
         // ...
       })
       .catch((error) => {
@@ -265,6 +283,8 @@ $(document).ready(() => {
               });
               $("#signup-form").trigger("reset");
               $(".loader").css("display", "none");
+              notifyUser("Your Account Has been Created");
+              renderHome();
             })
             .catch((err) => {
               console.log(err);
@@ -288,6 +308,7 @@ $(document).ready(() => {
     if (logout) {
       auth.signOut();
       handleUserLoggedOut();
+      notifyUser("Successfully Logged Out");
     } else {
       console.log("Request Dismissed");
     }
@@ -419,6 +440,8 @@ $(document).ready(() => {
             console.log("New Post Created");
             $("#create-post-form").trigger("reset");
             $(".loader-bar").addClass("d-none");
+            notifyUser("New Post Created Successfully");
+            renderHome();
           })
           .catch((err) => {
             console.log(err);
@@ -433,28 +456,80 @@ $(document).ready(() => {
     push(data);
   }
 
+  function getIndexOfElement(name, callback) {
+    var allElements = document.body.querySelectorAll(".read-post");
+
+    for (let i = 0; i <= allElements.length; i++) {
+      if (allElements[i].className == name) {
+        allElements[x].onclick = handleClick;
+      }
+    }
+    function handleClick() {
+      var elmParent = this.parentNode;
+      var parentChilds = elmParent.childNodes;
+      var index = 0;
+      for (let x = 0; x <= parentChilds.length; x++) {
+        if (parentChilds[x] == this) {
+          break;
+        }
+        if (parentChilds[x].className == name) {
+          index++;
+        }
+      }
+      callback.call(this, index);
+    }
+  }
+
+  // getIndexOfElement("read-post", (index) => {
+  //   console.log(index);
+  // });
+
   // Listing posts on homepage
 
   // Post Details
-
-  mainDiv.on("click", ".read-post", (e) => {
-    e.preventDefault();
-    console.log(e);
-    var postId = $(this).attr("href");
-    console.log(postId);
-    var postRef = databaseRef(database, "posts/" + postId);
-    get(postRef)
-      .then((snapshot) => {
-        console.log(snapshot);
-        if (snapshot.exists()) {
-          console.log(snapshot.val());
-        } else {
-          alert("The post you are trying to access does not exist");
-          console.log(postRef);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
 });
+
+$(document).on("click", ".card .read-post", (e) => {
+  var allEl = document.querySelectorAll(".read-post");
+  console.log(allEl, allEl);
+  // console.log(index);
+  // var data = localStorage.getItem("allPosts");
+  // console.log(JSON.parse(data));
+
+  // var text = $(this).text("Now I can see my self");
+  // e.preventDefault();
+  // console.log(text);
+  // var postId = $(this).data("ref");
+  // console.log(postId);
+  // var postRef = databaseRef(database, "posts/" + postId);
+  // get(postRef)
+  //   .then((snapshot) => {
+  //     console.log(snapshot);
+  //     if (snapshot.exists()) {
+  //       console.log(snapshot.val());
+  //     } else {
+  //       alert("The post you are trying to access does not exist");
+  //       console.log(postRef);
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  // });
+});
+export function renderPostDetail(ref) {
+  console.log(ref);
+  var postRef = databaseRef(database, "posts/" + ref);
+  get(postRef)
+    .then((snapshot) => {
+      console.log(snapshot);
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+      } else {
+        alert("The post you are trying to access does not exist");
+        console.log(postRef);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

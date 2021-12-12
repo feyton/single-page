@@ -10,7 +10,7 @@ import {
   getStorage,
   ref,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
-
+// import { renderHome } from "./main.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -74,6 +74,14 @@ export function handleUserLoggedIn(user) {
 
 export function handleUserLoggedOut() {
   $(".logged-in").css("display", "none");
-
   $(".logged-out").css("display", "block");
+  renderHome();
+}
+
+export function notifyUser(message, type = "primary") {
+  $(".notify").text(message);
+  $(".notify").removeClass("d-none");
+  setTimeout(() => {
+    $(".notify").addClass("d-none");
+  }, 3000);
 }
