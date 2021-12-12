@@ -181,22 +181,35 @@ export function renderHomePostDiv(
   author_name,
   date
 ) {
-  var postDiv = `
-    <div class="card">
-    <div class="post-image">
-        <img src="${imgUrl}" alt="">
-        <div class="post-info">
-            <span>${author_name} |</span>
-            <span>${date}</span>
-        </div>
-    </div>
-    <a href="#post" class="title read-post" data-ref="${postId}">${title}</a>
-    <p>${summary}</p>
-    <a href="#post" postid="123" data-ref="${postId}" class="btn btn-primary read-post">Read more</a>
+  var newDiv = document.createElement("div");
+  var postDiv =
+    '<div class="card">' +
+    '<div class="post-image">' +
+    '<img src="' +
+    imgUrl +
+    '" alt="">' +
+    '<div class="post-info">' +
+    "<span>" +
+    author_name +
+    " |</span>" +
+    "<span>" +
+    date +
+    "</span>" +
+    "</div>" +
+    "</div>" +
+    '<a href="#post" class="title read-post" data-ref="' +
+    postId +
+    '">' +
+    title +
+    "</a>" +
+    "<p>" +
+    summary +
+    "</p>" +
+    '<a href="#post" postid="123" data-ref="' +
+    postId +
+    '" class="btn btn-primary read-post">Read more</a>' +
+    "</div>";
 
-</div>
-    
-    
-    `;
-  $(".blog-list").append(postDiv);
+  newDiv.innerHTML = postDiv;
+  return newDiv;
 }

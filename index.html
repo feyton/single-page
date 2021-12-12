@@ -62,10 +62,29 @@
         .d-none {
             display: none;
         }
+
+        .notify {
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 1rem 2rem;
+            padding: 1rem;
+            font-family: var(--Lexend);
+            color: rgb(255, 255, 255);
+            z-index: 100000;
+            background-color: rgba(27, 26, 26, 0.945);
+            text-align: center;
+            justify-content: center;
+            border-radius: 20px;
+            min-height: fit-content;
+            max-width: 200px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
+    <div class="notify d-none"></div>
     <div class="loader-bar d-none" id="loader">
         <div class="load-juice "></div>
     </div>
@@ -89,7 +108,7 @@
 
     <footer class="footer">
         <h2>Created by Fabrice</h2>
-        <a href="" target="_blank">Access code on github</a>
+        <a href="https://github.com/feyton/single-page.git" target="_blank">Access code on github</a>
     </footer>
 
 
