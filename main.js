@@ -5,6 +5,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import {
   child,
+  get,
   push,
   ref as databaseRef,
   set,
@@ -14,6 +15,7 @@ import {
   getStorage,
   ref,
   uploadBytes,
+  uploadBytesResumable,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 import {
   auth,
@@ -27,13 +29,14 @@ import {
   createPostView,
   homeHtml,
   loginView,
+  renderHomePostDiv,
   signupView,
 } from "./templates.js";
 var mainDiv = $("#main-container");
 $(document).ready(() => {
   // Routing
   var mainDiv = $("#main-container");
-  console.log(mainDiv.text());
+  // console.log(mainDiv.text());
   if (mainDiv.text() == "") {
     renderHome();
   }
@@ -50,17 +53,77 @@ $(document).ready(() => {
   $(".nav-link.signup").click(() => {
     renderSignup();
   });
+  function displayLoader(state) {
+    if (state == true) {
+      $(".loader-bar").removeClass("d-none");
+      $(".load-juice").addClass("animate");
+    } else {
+      $(".loader-bar").addClass("d-none");
+      $(".load-juice").removeClass("animate");
+    }
+  }
 
   function renderHome() {
     handlePathnameHistory("", "Fabrice| Home");
+    displayLoader(true);
+
+    var postRefList = databaseRef(database, "posts");
+    get(postRefList)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          // console.log(snapshot.key);
+
+          // console.log(snapshot.val());
+          // console.log(snapshot.val());
+          mainDiv.html("");
+          mainDiv.html(homeHtml);
+
+          for (let i = 1; i <= snapshot.size; i++) {
+            var data = snapshot.val();
+            Object.keys(data).forEach((key) => {
+              var userPosts = snapshot.val()[key];
+              Object.keys(snapshot.val()[key]).forEach((key2) => {
+                var post = userPosts[key2];
+                var postId = key + "/" + key2;
+                // console.log(postId);
+                if (post.author_name)
+                  renderHomePostDiv(
+                    post.imageURL,
+                    post.title,
+                    postId,
+                    post.summary,
+                    post.author_name,
+                    post.date
+                  );
+              });
+            });
+
+            console.log("Loaded data");
+            displayLoader(false);
+          }
+          var posts = Object.keys(snapshot.val());
+          if (posts.length > 1) {
+            console.log("now I can acess pots", posts);
+          }
+        } else {
+          console.log("No data found");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setTimeout(() => {
+          renderHome();
+        }, 1000);
+      });
+
     mainDiv.html("");
     mainDiv.html(homeHtml);
   }
   function handlePathnameHistory(path, title) {
-    console.log(window.location.host);
+    var host = window.location.host;
 
     // Used to change the url
-    // var nextUrl = "http://127.0.0.1:5500/" + path;
+    var nextUrl = host + path;
 
     // window.history.pushState("", title, nextUrl);
     // window.history.replaceState("", title, nextUrl);
@@ -266,11 +329,13 @@ $(document).ready(() => {
   // Handle Post Creation
 
   mainDiv.on("submit", "#create-post-form", () => {
+    $(".loader-bar").removeClass("d-none");
     // alert("submitted");
-    var title, img, content, published;
+    var title, img, content, published, summary;
     title = getInputValue("#post-title-create");
     img = $("#post-picture")[0].files[0];
     content = getInputValue("#post-content-create");
+    summary = getInputValue("#post-summary-create");
     var published_check = getInputValue("#post-published");
     if (published_check == "on") {
       published = "true";
@@ -283,14 +348,14 @@ $(document).ready(() => {
     if (user) {
       // console.log(user.displayName);
       $(".loader").css("display", "block");
-      savePost(title, img, content, user, published);
+      savePost(title, img, content, user, published, summary);
       $(".loader").css("display", "none");
     } else {
       alert("You must be logged in to create");
     }
   });
 
-  function savePost(title, img, content, user, published) {
+  function savePost(title, img, content, user, published, summary) {
     // var user = auth.currentUser;
     // var postRef = databaseRef(database, "posts/" + user.uid);
 
@@ -309,39 +374,57 @@ $(document).ready(() => {
       "posts/" + user.uid + "/" + newPostRef + "/" + img.name
     );
     // var newPostRef = postRef.push();
-    uploadBytes(postImageRef, img).then(() => {
-      console.log("Image uploaded successfully");
-      getDownloadURL(
-        ref(storage, "posts/" + user.uid + "/" + newPostRef + "/" + img.name)
-      )
-        .then((url) => {
-          imgURL = url;
-          console.log(imgURL);
-          const postData = {
-            title: title,
-            content: content,
-            published: published,
-            imageURL: imgURL,
-            author: user.uid,
-          };
-          set(
-            databaseRef(database, "posts/" + user.uid + "/" + newPostRef),
-            postData
-          );
-          set(
-            databaseRef(
-              database,
-              "user-posts/" + user.uid + "/" + newuserPostRef
-            ),
-            postData
-          );
+    var uploadTask = uploadBytesResumable(postImageRef, img);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(progress);
 
-          console.log("New Post Created");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+        $(".load-juice").css("width", progress + "%");
+      },
+      (err) => {
+        console.log("Unable to upload the image", err);
+      },
+      () => {
+        getDownloadURL(
+          ref(storage, "posts/" + user.uid + "/" + newPostRef + "/" + img.name)
+        )
+          .then((url) => {
+            imgURL = url;
+            console.log(imgURL);
+            const postData = {
+              title: title,
+              content: content,
+              published: published,
+              imageURL: imgURL,
+              author: user.uid,
+              summary: summary,
+              author_name: user.displayName.split(" ")[0],
+              date: new Date().toDateString().split(" ").slice(1).join(" "),
+            };
+            set(
+              databaseRef(database, "posts/" + user.uid + "/" + newPostRef),
+              postData
+            );
+            set(
+              databaseRef(
+                database,
+                "user-posts/" + user.uid + "/" + newuserPostRef
+              ),
+              postData
+            );
+
+            console.log("New Post Created");
+            $("#create-post-form").trigger("reset");
+            $(".loader-bar").addClass("d-none");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    );
   }
 
   function saveComment(postId, comment) {
@@ -351,4 +434,27 @@ $(document).ready(() => {
   }
 
   // Listing posts on homepage
+
+  // Post Details
+
+  mainDiv.on("click", ".read-post", (e) => {
+    e.preventDefault();
+    console.log(e);
+    var postId = $(this).attr("href");
+    console.log(postId);
+    var postRef = databaseRef(database, "posts/" + postId);
+    get(postRef)
+      .then((snapshot) => {
+        console.log(snapshot);
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+        } else {
+          alert("The post you are trying to access does not exist");
+          console.log(postRef);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 });

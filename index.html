@@ -11,14 +11,63 @@
     <script src='https://cdn.tiny.cloud/1/xyeau33pff3iqnbpm6awb9rz6y6mrvid09r36yumi28g026m/tinymce/5/tinymce.min.js'
         referrerpolicy="origin">
         </script>
-    <script>
+    <style>
+        .loader-bar {
+            position: fixed;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(209, 227, 230, 0.884);
+            z-index: 1000;
 
-    </script>
+        }
+
+        .load-juice {
+            position: absolute;
+            left: 0%;
+            height: 10px;
+            top: 0;
+            width: 0;
+            background: linear-gradient(45deg, red, blue, red);
+            z-index: 1;
+            border-radius: 0px 50px 50px 0px;
+            z-index: 1020;
+
+        }
+
+        .load-juice.animate {
+            width: 100%;
+            animation: load-indicator;
+            animation-duration: 2s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite
+        }
+
+        @keyframes load-indicator {
+            0% {
+                background: linear-gradient(to left, red, blue, cyan);
+            }
+
+            50% {
+                background: linear-gradient(to left, rgb(158, 84, 84), rgb(56, 56, 112), rgb(116, 175, 175));
+            }
+
+            100% {
+                background: linear-gradient(to left, cyan, blue, red);
+            }
+
+        }
+
+        .d-none {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="loader d-none">
-        <div class="lds-dual-ring "></div>
+    <div class="loader-bar d-none" id="loader">
+        <div class="load-juice "></div>
     </div>
     <nav>
         <div class="brand">
@@ -36,30 +85,7 @@
         </ul>
     </nav>
 
-    <main id="main-container">
-        <div class="create-view">
-            <h2 class="capitalize">Create a new post</h2>
-
-            <form action="#fdd" id="create-post-form">
-                <input type="text" name="post-title" id="post-title-create" placeholder="Title" required minlength="3">
-
-                <input type="file" accept="image/*" name="post-picture" id="post-picture" placeholder="Post Picture"
-                    class="custom-file-input" required>
-                <div class="check-box-group">
-                    <input type="checkbox" name="published" id="post-published">
-                    <label for="post-published">Published</label>
-                </div> <textarea name="content" id="post-content-create" cols="30" rows="10"
-                    placeholder="Add your content here"></textarea>
-
-                <input type="submit" value="Create" class="btn btn-primary">
-
-
-
-
-            </form>
-        </div>
-
-    </main>
+    <main id="main-container"></main>
 
     <footer class="footer">
         <h2>Created by Fabrice</h2>
@@ -81,6 +107,7 @@
     <script src="./base.js" defer type="module"></script>
     <script src="./templates.js" defer type="module"></script>
     <script src="./main.js" defer type="module"></script>
+    <script src="./home.js" defer type="module"></script>
 </body>
 
 </html>
