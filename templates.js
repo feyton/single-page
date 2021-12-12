@@ -5,58 +5,7 @@ export var homeHtml = `
 <h2>Welcome to Feyton Inc</h2>
 
 <div class="blog-list">
-    <div class="card">
-        <div class="post-image">
-            <img src="/IMG-20191129-WA0001.jpg" alt="">
-            <div class="post-info">
-                <span>Fabruce |</span>
-                <span>25 June 2021</span>
-            </div>
-        </div>
-        <a href="#post" class="title" data-post_id="">Lorem ipsum dolor sit amet consectetur.</a>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, eius!</p>
-        <a href="#post" data-post_id="" class="btn btn-primary">Read more</a>
-
-    </div>
-    <div class="card">
-        <div class="post-image">
-            <img src="/IMG-20191129-WA0001.jpg" alt="">
-            <div class="post-info">
-                <span>Fabruce |</span>
-                <span>25 June 2021</span>
-            </div>
-        </div>
-        <a href="#post" class="title read-post" data-post_id="">Lorem ipsum dolor sit amet consectetur.</a>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, eius!</p>
-        <a href="#post" data-post_id="" class="btn btn-primary read-post">Read more</a>
-
-    </div>
-    <div class="card">
-        <div class="post-image">
-            <img src="/IMG-20191129-WA0001.jpg" alt="">
-            <div class="post-info">
-                <span>Fabruce |</span>
-                <span>25 June 2021</span>
-            </div>
-        </div>
-        <a href="#post" class="title" data-post_id="">Lorem ipsum dolor sit amet consectetur.</a>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, eius!</p>
-        <a href="#post" data-post_id="" class="btn btn-primary">Read more</a>
-
-    </div>
-    <div class="card">
-        <div class="post-image">
-            <img src="/IMG-20191129-WA0001.jpg" alt="">
-            <div class="post-info">
-                <span>Fabruce |</span>
-                <span>25 June 2021</span>
-            </div>
-        </div>
-        <a href="#post" class="title" data-post_id="">Lorem ipsum dolor sit amet consectetur.</a>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, eius!</p>
-        <a href="#post" data-post_id="" class="btn btn-primary">Read more</a>
-
-    </div>
+    
 </div>
 </div>
 
@@ -155,9 +104,7 @@ export var blogDetailView = `
 
                 </div>
                 <div class="message">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi similique unde
-                        inventore deleniti ipsum nulla doloremque quasi nostrum quo eligendi possimus
-                        excepturi omnis sequi asperiores ab, perferendis autem iusto? Impedit!</p>
+                    <p>A happy traveller, and a software developer by passion. If you see me around, say hi and we can talk dev on a cup of coffe</p>
                     <div class="links"><a href="###hd" class="comment-reply">Reply</a> <a href="#none"
                             class="comment-like">Like &nbsp;<span class="comment-likes">(20)</span></a>
                     </div>
@@ -170,13 +117,12 @@ export var blogDetailView = `
         <h2>About Author</h2>
         <div class="author-card">
             <img src="/IMG-20191129-WA0001.jpg" alt="" class="author-image">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia corrupti ratione aliquam
-                aperiam dolore dolorum tenetur rem, explicabo veniam a eveniet iusto praesentium quibusdam
-                corporis velit delectus modi provident earum.</p>
+            <p>A happy traveller, and a software developer by passion. If you see 
+            me around, say hi and we can talk dev on a cup of coffe</p>
             <h3>Follow me</h3>
             <div class="social">
-                <div class="btn btn-follow" data-link_facebook="">Facebook</div>
-                <div class="btn btn-follow" data-link_twitter="">Twitter</div>
+                <a class="btn btn-follow" target="_blank" href="https://facebook.com/feytonf/">Facebook</a>
+                <a class="btn btn-follow" href="https://twitter.com/feytonf" target="_blank">Twitter</a>
             </div>
         </div>
 
@@ -203,9 +149,15 @@ export var createPostView = `
 
 <form action="#fdd" id="create-post-form">
     <input type="text" name="post-title" id="post-title-create" placeholder="Title" required minlength="3">
+    <textarea name="summary" id="post-summary-create" cols="30" rows="3"
+        placeholder="Add your summary here"></textarea>
 
     <input type="file" accept="image/*" name="post-picture" id="post-picture" placeholder="Post Picture"
         class="custom-file-input" required>
+        <div class="check-box-group">
+                    <input type="checkbox" name="published" id="post-published">
+                    <label for="post-published">Published</label>
+                </div> 
     <textarea name="content" id="post-content-create" cols="30" rows="10"
         placeholder="Add your content here"></textarea>
 
@@ -220,3 +172,31 @@ export var createPostView = `
 
 
 `;
+
+export function renderHomePostDiv(
+  imgUrl,
+  title,
+  postId,
+  summary,
+  author_name,
+  date
+) {
+  var postDiv = `
+    <div class="card">
+    <div class="post-image">
+        <img src="${imgUrl}" alt="">
+        <div class="post-info">
+            <span>${author_name} |</span>
+            <span>${date}</span>
+        </div>
+    </div>
+    <a href="#post" class="title read-post" data-ref="${postId}">${title}</a>
+    <p>${summary}</p>
+    <a href="#post" postid="123" data-ref="${postId}" class="btn btn-primary read-post">Read more</a>
+
+</div>
+    
+    
+    `;
+  $(".blog-list").append(postDiv);
+}
