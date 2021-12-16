@@ -1,3 +1,5 @@
+{
+}
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -320,11 +322,11 @@ $(document).ready(() => {
     renderPostDetail;
   });
 
-  function renderPostDetail() {
-    handlePathnameHistory("signup", "SignUp| Fabrice");
-    mainDiv.html("");
-    mainDiv.html(blogDetailView);
-  }
+  // function renderPostDetail() {
+  //   handlePathnameHistory("signup", "SignUp| Fabrice");
+  //   mainDiv.html("");
+  //   mainDiv.html(blogDetailView);
+  // }
 
   $(".nav-link.create").on("click", (e) => {
     e.preventDefault();
@@ -455,66 +457,29 @@ $(document).ready(() => {
     var postCommentRef = ref(database, "post-comments/" + postId);
     push(data);
   }
-
-  function getIndexOfElement(name, callback) {
-    var allElements = document.body.querySelectorAll(".read-post");
-
-    for (let i = 0; i <= allElements.length; i++) {
-      if (allElements[i].className == name) {
-        allElements[x].onclick = handleClick;
-      }
-    }
-    function handleClick() {
-      var elmParent = this.parentNode;
-      var parentChilds = elmParent.childNodes;
-      var index = 0;
-      for (let x = 0; x <= parentChilds.length; x++) {
-        if (parentChilds[x] == this) {
-          break;
-        }
-        if (parentChilds[x].className == name) {
-          index++;
-        }
-      }
-      callback.call(this, index);
-    }
-  }
-
-  // getIndexOfElement("read-post", (index) => {
-  //   console.log(index);
-  // });
-
-  // Listing posts on homepage
-
-  // Post Details
 });
 
 $(document).on("click", ".card .read-post", (e) => {
-  var allEl = document.querySelectorAll(".read-post");
-  console.log(allEl, allEl);
-  // console.log(index);
-  // var data = localStorage.getItem("allPosts");
-  // console.log(JSON.parse(data));
-
-  // var text = $(this).text("Now I can see my self");
+  var postId = e.target.getAttribute("data-ref");
   // e.preventDefault();
-  // console.log(text);
-  // var postId = $(this).data("ref");
-  // console.log(postId);
-  // var postRef = databaseRef(database, "posts/" + postId);
-  // get(postRef)
-  //   .then((snapshot) => {
-  //     console.log(snapshot);
-  //     if (snapshot.exists()) {
-  //       console.log(snapshot.val());
-  //     } else {
-  //       alert("The post you are trying to access does not exist");
-  //       console.log(postRef);
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  // });
+
+  var postRef = databaseRef(database, "posts/" + postId);
+  get(postRef)
+    .then((snapshot) => {
+      console.log(snapshot);
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        // handlePathnameHistory("signup", "SignUp| Fabrice");
+        mainDiv.html("");
+        mainDiv.html(blogDetailView);
+      } else {
+        alert("The post you are trying to access does not exist");
+        console.log(postRef);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 export function renderPostDetail(ref) {
   console.log(ref);
