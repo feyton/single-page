@@ -81,7 +81,7 @@ export function notifyUser(message, type = "primary") {
   $(".notify").removeClass("d-none");
   setTimeout(() => {
     $(".notify").addClass("d-none");
-  }, 3000);
+  }, 5000);
 }
 
 export function handleUserLoggedInDetail() {
