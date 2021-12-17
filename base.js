@@ -51,8 +51,7 @@ onAuthStateChanged(auth, (user) => {
     handleUserLoggedIn(user);
     // ...
   } else {
-    // User is signed out
-    // ...
+    handleUserLoggedOut();
   }
 });
 
@@ -75,7 +74,6 @@ export function handleUserLoggedIn(user) {
 export function handleUserLoggedOut() {
   $(".logged-in").css("display", "none");
   $(".logged-out").css("display", "block");
-  renderHome();
 }
 
 export function notifyUser(message, type = "primary") {
@@ -84,4 +82,18 @@ export function notifyUser(message, type = "primary") {
   setTimeout(() => {
     $(".notify").addClass("d-none");
   }, 3000);
+}
+
+export function handleUserLoggedInDetail() {
+  let user = auth.currentUser;
+  if (user) {
+    $(".user-display-name").text(user.displayName.split(" ")[0]);
+
+    $(".logged-in").css("display", "block");
+
+    $(".logged-out").css("display", "none");
+  } else {
+    $(".logged-in").css("display", "none");
+    $(".logged-out").css("display", "block");
+  }
 }
