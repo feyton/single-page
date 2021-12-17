@@ -309,8 +309,9 @@ $(document).ready(() => {
     var logout = confirm("Are you sure to logout?");
     if (logout) {
       auth.signOut();
-      handleUserLoggedOut();
+
       notifyUser("Successfully Logged Out");
+      handleUserLoggedOut();
     } else {
       console.log("Request Dismissed");
     }
