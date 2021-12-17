@@ -1,3 +1,5 @@
+{
+}
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -21,12 +23,12 @@ import {
   auth,
   database,
   handleUserLoggedIn,
+  handleUserLoggedInDetail,
   handleUserLoggedOut,
   handleUserLoginError,
   notifyUser,
 } from "./base.js";
 import {
-  blogDetailView,
   createPostView,
   homeHtml,
   loginView,
@@ -320,11 +322,11 @@ $(document).ready(() => {
     renderPostDetail;
   });
 
-  function renderPostDetail() {
-    handlePathnameHistory("signup", "SignUp| Fabrice");
-    mainDiv.html("");
-    mainDiv.html(blogDetailView);
-  }
+  // function renderPostDetail() {
+  //   handlePathnameHistory("signup", "SignUp| Fabrice");
+  //   mainDiv.html("");
+  //   mainDiv.html(blogDetailView);
+  // }
 
   $(".nav-link.create").on("click", (e) => {
     e.preventDefault();
@@ -455,75 +457,24 @@ $(document).ready(() => {
     var postCommentRef = ref(database, "post-comments/" + postId);
     push(data);
   }
-
-  function getIndexOfElement(name, callback) {
-    var allElements = document.body.querySelectorAll(".read-post");
-
-    for (let i = 0; i <= allElements.length; i++) {
-      if (allElements[i].className == name) {
-        allElements[x].onclick = handleClick;
-      }
-    }
-    function handleClick() {
-      var elmParent = this.parentNode;
-      var parentChilds = elmParent.childNodes;
-      var index = 0;
-      for (let x = 0; x <= parentChilds.length; x++) {
-        if (parentChilds[x] == this) {
-          break;
-        }
-        if (parentChilds[x].className == name) {
-          index++;
-        }
-      }
-      callback.call(this, index);
-    }
-  }
-
-  // getIndexOfElement("read-post", (index) => {
-  //   console.log(index);
-  // });
-
-  // Listing posts on homepage
-
-  // Post Details
 });
 
 $(document).on("click", ".card .read-post", (e) => {
-  var allEl = document.querySelectorAll(".read-post");
-  console.log(allEl, allEl);
-  // console.log(index);
-  // var data = localStorage.getItem("allPosts");
-  // console.log(JSON.parse(data));
+  var postId = e.target.getAttribute("data-ref");
+  e.preventDefault();
 
-  // var text = $(this).text("Now I can see my self");
-  // e.preventDefault();
-  // console.log(text);
-  // var postId = $(this).data("ref");
-  // console.log(postId);
-  // var postRef = databaseRef(database, "posts/" + postId);
-  // get(postRef)
-  //   .then((snapshot) => {
-  //     console.log(snapshot);
-  //     if (snapshot.exists()) {
-  //       console.log(snapshot.val());
-  //     } else {
-  //       alert("The post you are trying to access does not exist");
-  //       console.log(postRef);
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  // });
-});
-export function renderPostDetail(ref) {
-  console.log(ref);
-  var postRef = databaseRef(database, "posts/" + ref);
+  var postRef = databaseRef(database, "posts/" + postId);
   get(postRef)
     .then((snapshot) => {
       console.log(snapshot);
       if (snapshot.exists()) {
         console.log(snapshot.val());
+        let post = snapshot.val();
+        // handlePathnameHistory("signup", "SignUp| Fabrice");
+        mainDiv.html("");
+        let detailView = renderPostDetail(post);
+        mainDiv.html(detailView);
+        handleUserLoggedInDetail();
       } else {
         alert("The post you are trying to access does not exist");
         console.log(postRef);
@@ -532,4 +483,89 @@ export function renderPostDetail(ref) {
     .catch((err) => {
       console.log(err);
     });
+});
+export function renderPostDetail(post) {
+  let template = `
+
+<div class="blog-details">
+
+<section class="main-content">
+    <div class="blog-details">
+        <h2 id="post-title">${post.title}</h2>
+        <img src="${post.imageURL}" alt="" class="blog-photo">
+        <div class="blog-info">
+            <span id="post-author">${post.author_name} |</span>
+            <span id="post-date">${post.date}</span>
+        </div>
+        <div class="blog-content" id="blog-content">
+            <p>${post.content}</p>
+
+        </div>
+        <hr>
+        <div class="comments">
+            <h2>Join the Conservation</h2>
+            <form action="#e" id="comment-form" class="logged-in">
+                <textarea name="comment" id="user-comment" cols="30" rows="3"
+                    placeholder="Write your comment here..."></textarea>
+                <input type="submit" value="Send" class="btn btn-primary">
+            </form>
+            <div class="logged-out">
+                <p class="warning p">To Comment, you must have an account!</p>
+                <div class="button-group logged-out">
+                    <div class="btn btn-primary"><a class="nav-link login">Login</a></div>
+                    <span>Or</span>
+                    <div class="btn btn-secondary"><a class="nav-link signup">Signup</a></div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="comment-list">
+            <div class="comment">
+                <div class="commentor">
+                    <img src="IMG-20191129-WA0001.jpg" alt="">
+                    <h4>Fabrice</h4>
+
+                </div>
+                <div class="message">
+                    <p>A happy traveller, and a software developer by passion. If you see me around, say hi and we can talk dev on a cup of coffe</p>
+                    <div class="links"><a href="###hd" class="comment-reply">Reply</a> <a href="#none"
+                            class="comment-like">Like &nbsp;<span class="comment-likes">(20)</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <aside class="sidebar">
+        <h2>About Author</h2>
+        <div class="author-card">
+            <img src="/IMG-20191129-WA0001.jpg" alt="" class="author-image">
+            <p>A happy traveller, and a software developer by passion. If you see 
+            me around, say hi and we can talk dev on a cup of coffe</p>
+            <h3>Follow me</h3>
+            <div class="social">
+                <a class="btn btn-follow" target="_blank" href="https://facebook.com/feytonf/">Facebook</a>
+                <a class="btn btn-follow" href="https://twitter.com/feytonf" target="_blank">Twitter</a>
+            </div>
+        </div>
+
+        <h2>Subscribe to our newsletter</h2>
+        <div class="form-div-sub">
+            <p>Receive our latest news directly into your inbox</p>
+            <form action="#hd" id="subscribe-form">
+                <input type="email" name="email" id="sub-email" placeholder="Your Email">
+                <input type="submit" value="Subscribe" class="btn btn-primary">
+            </form>
+        </div>
+
+
+    </aside>
+</section>
+
+</div>
+
+
+`;
+  return template;
 }
