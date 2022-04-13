@@ -6,81 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fabrice| Single Page</title>
-    <link rel="stylesheet" href="./main.css" class="css">
-    <link rel="icon" type="image/png" href="Logo.png">
+    <link rel="stylesheet" href="./css/main.css" class="css">
+    <link rel="stylesheet" href="./css/index.css">
     <script src='https://cdn.tiny.cloud/1/xyeau33pff3iqnbpm6awb9rz6y6mrvid09r36yumi28g026m/tinymce/5/tinymce.min.js'
         referrerpolicy="origin">
         </script>
-    <style>
-        .loader-bar {
-            position: fixed;
-            top: 0%;
-            left: 0%;
-            width: 100%;
-            height: 10px;
-            background-color: rgba(209, 227, 230, 0.884);
-            z-index: 1000;
+    <link rel="shortcut icon" href="https://res.cloudinary.com/feyton/image/upload/v1643718295/mfoit2n8fs1vqn4hw0td.png"
+        type="image/x-icon">
 
-        }
-
-        .load-juice {
-            position: absolute;
-            left: 0%;
-            height: 10px;
-            top: 0;
-            width: 0;
-            background: linear-gradient(45deg, red, blue, red);
-            z-index: 1;
-            border-radius: 0px 50px 50px 0px;
-            z-index: 1020;
-
-        }
-
-        .load-juice.animate {
-            width: 100%;
-            animation: load-indicator;
-            animation-duration: 2s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite
-        }
-
-        @keyframes load-indicator {
-            0% {
-                background: linear-gradient(to left, red, blue, cyan);
-            }
-
-            50% {
-                background: linear-gradient(to left, rgb(158, 84, 84), rgb(56, 56, 112), rgb(116, 175, 175));
-            }
-
-            100% {
-                background: linear-gradient(to left, cyan, blue, red);
-            }
-
-        }
-
-        .d-none {
-            display: none;
-        }
-
-        .notify {
-            position: fixed;
-            top: 0;
-            right: 0;
-            margin: 1rem 2rem;
-            padding: 1rem;
-            font-family: var(--Lexend);
-            color: rgb(255, 255, 255);
-            z-index: 100000;
-            background-color: rgba(27, 26, 26, 0.945);
-            text-align: center;
-            justify-content: center;
-            border-radius: 20px;
-            min-height: fit-content;
-            max-width: 200px;
-            font-weight: bold;
-        }
-    </style>
 </head>
 
 <body>
@@ -98,7 +31,8 @@
             <li class="logged-in"><a data-link="about" class="nav-link create">Create</a></li>
             <li class="logged-out"><a data-link="login" class="nav-link login">Login</a></li>
             <li class="logged-out"><a data-link="signup" class="nav-link signup">Signup</a></li>
-            <li class="logged-in"><a data-link="home" class="profile"><img src="IMG-20191129-WA0001.jpg" alt=""
+            <li class="logged-in"><a data-link="home" class="profile"><img
+                        src="https://res.cloudinary.com/feyton/image/upload/v1643272521/user_nophzu.png" alt=""
                         class="profile-image">&nbsp;<span class="user-display-name"></span></a></li>
             <li class="logged-in"><a data-link="home" class="logout-button">Logout</a></li>
         </ul>
@@ -110,10 +44,6 @@
         <h2>Created by Fabrice</h2>
         <a href="https://github.com/feyton/single-page.git" target="_blank">Access code on github</a>
     </footer>
-
-
-
-
 
 
     <!-- Jquey -->
