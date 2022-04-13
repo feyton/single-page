@@ -309,7 +309,7 @@ $(document).ready(() => {
     if (logout) {
       auth.signOut();
 
-      notifyUser("Successfully Logged Out");
+      notifyUser("Successfully Logged Out", "error");
       handleUserLoggedOut();
     } else {
       console.log("Request Dismissed");
