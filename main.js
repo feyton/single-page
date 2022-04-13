@@ -124,9 +124,8 @@ $(document).ready(() => {
       })
       .catch((err) => {
         console.log(err);
-        setTimeout(() => {
-          renderHome();
-        }, 1000);
+        notifyUser("Something went wrong on our side", "error");
+        displayLoader(false);
       });
 
     mainDiv.html("");

@@ -1,0 +1,69 @@
+
+        .loader-bar {
+            position: fixed;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(209, 227, 230, 0.884);
+            z-index: 1000;
+
+        }
+
+        .load-juice {
+            position: absolute;
+            left: 0%;
+            height: 10px;
+            top: 0;
+            width: 0;
+            background: linear-gradient(45deg, red, blue, red);
+            z-index: 1;
+            border-radius: 0px 50px 50px 0px;
+            z-index: 1020;
+
+        }
+
+        .load-juice.animate {
+            width: 100%;
+            animation: load-indicator;
+            animation-duration: 2s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite
+        }
+
+        @keyframes load-indicator {
+            0% {
+                background: linear-gradient(to left, red, blue, cyan);
+            }
+
+            50% {
+                background: linear-gradient(to left, rgb(158, 84, 84), rgb(56, 56, 112), rgb(116, 175, 175));
+            }
+
+            100% {
+                background: linear-gradient(to left, cyan, blue, red);
+            }
+
+        }
+
+        .d-none {
+            display: none;
+        }
+
+        .notify {
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 1rem 2rem;
+            padding: 1rem;
+            font-family: var(--Lexend);
+            color: rgb(255, 255, 255);
+            z-index: 100000;
+            background-color: rgba(27, 26, 26, 0.945);
+            text-align: center;
+            justify-content: center;
+            border-radius: 20px;
+            min-height: fit-content;
+            max-width: 200px;
+            font-weight: bold;
+        }
